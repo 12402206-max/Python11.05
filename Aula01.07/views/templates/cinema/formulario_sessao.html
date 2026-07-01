@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}Nova sessão{% endblock %}
+
+{% block content %}
+<h1>Nova sessão</h1>
+
+<form method="POST" action="{{ url_for('cinema.cadastrar_sessao') }}">
+    <div class="form-grupo">
+        <label>Filme</label>
+        <select name="filme_id" required>
+            <option value="">Selecione o filme...</option>
+            {% for f in filmes %}
+            <option value="{{ f.id }}">{{ f.titulo }} ({{ f.duracao_min }} min · {{ f.classificacao }})</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-grupo">
+        <label>Sala</label>
+        <select name="sala_id" required>
+            <option value="">Selecione a sala...</option>
+            {% for s in salas %}
+            <option value="{{ s.id }}">Sala {{ s.numero }} — {{ s.capacidade }} lugares</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-grupo">
+        <label>Data e hora</label>
+        <input type="datetime-local" name="data_hora" required>
+    </div>
+    <div class="form-grupo">
+        <label>Preço do ingresso (R$)</label>
+        <input type="number" name="preco" step="any" min="0" required>
+    </div>
+    <button type="submit">Salvar sessão</button>
+</form>
+
+<p><a href="{{ url_for('cinema.index') }}">← Voltar</a></p>
+{% endblock %}
